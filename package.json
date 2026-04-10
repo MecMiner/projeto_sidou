@@ -1,0 +1,16 @@
+{
+  "name": "projetos_sidou",
+  "version": "1.0.0",
+  "description": "Projeto com 4ano de SI",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "dev": "node --watch server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^5.2.1"
+  }
+}

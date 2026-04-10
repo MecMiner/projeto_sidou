@@ -1,4 +1,6 @@
 import {randomUUID} from "crypto"
+//git init
+//git remote add origin https://github.com/MecMiner/projeto_sidou.git
 
 class Database {
     database = []

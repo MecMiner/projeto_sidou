@@ -1,11 +1,25 @@
 import {randomUUID} from "crypto"
+import fs from "fs/promises"
 //git init
 //git remote add origin https://github.com/MecMiner/projeto_sidou.git
+const arquivo = new URL("./dados.json", import.meta.url)
 
 class Database {
     database = []
 
-    constructor (){}
+    constructor (){
+        fs.readFile(arquivo, 'utf-8')
+        .then(dados => {
+            this.database = JSON.parse(dados);
+        })
+        .catch(() => {
+            this.atualizar();
+        })
+    }
+
+    atualizar(){
+        fs.writeFile(arquivo, JSON.stringify(this.database))
+    }
 
     adicionar(item){
         const novoItem = {
@@ -14,6 +28,7 @@ class Database {
             idade: item.idade
         }
         this.database.push(novoItem)
+        this.atualizar()
     }
 
     buscar(){

@@ -35,6 +35,14 @@ class Database {
         return this.database
     }
 
+    buscarItem(id){
+        let item = {}
+        if(Array.isArray(this.database)){
+            item = this.database.find(elemento => elemento.id == id)
+        }
+        return item
+    }
+
     alterar(item){
         const {id, nome, idade} = item
         let index = this.database.findIndex(elem => elem.id == id)
@@ -43,6 +51,19 @@ class Database {
         }
         this.database[index].nome = nome
         this.database[index].idade = idade
+        this.atualizar()
+        return "Dados atualizados com sucesso"
+    }
+
+    deletar(id){
+        let index = this.database.findIndex(elem => elem.id == id)
+        if(index == -1){
+            return "Id não encontrado"
+        }
+
+        this.database.splice(index, 1)
+
+        return ("Deletado com sucesso")
     }
 }
 

@@ -6,9 +6,13 @@ app.use(express.json())
 const db = new Database()
 
 app.get('/', (req, res) => {
-   res.json(db)
+   res.json(db.buscar())
 })
 
+app.get('/item', (req, res) => {
+    const {id} = req.body
+   res.json(db.buscarItem(id))
+})
 app.post('/', (req, res) => {
     db.adicionar(req.body)
     res.end("Dados enviados!")
@@ -17,6 +21,12 @@ app.post('/', (req, res) => {
 app.put('/', (req, res) => {
     const response = db.alterar(req.body)
     res.end(response)
+})
+
+app.delete("/item", (req, res) => {
+    const {id} = req.body
+    const resposta = db.deletar(id)
+    res.send(resposta)
 })
 
 app.listen(3000, ()=> {

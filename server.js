@@ -5,8 +5,12 @@ app.use(express.json())
 
 const db = new Database()
 
+let obj = {nome: "Teste", idade: 12}
+let obj2 = {nome: "Teste", idade: 12}
+let tabela = [obj, obj2]
+
 app.get('/', (req, res) => {
-   res.json(db.buscar())
+   res.json(db.buscar("clientes"))
 })
 
 app.get('/item', (req, res) => {
@@ -14,8 +18,8 @@ app.get('/item', (req, res) => {
    res.json(db.buscarItem(id))
 })
 app.post('/', (req, res) => {
-    db.adicionar(req.body)
-    res.end("Dados enviados!")
+    const resposta = db.adicionar("pessoas",req.body)
+    res.end(resposta)
 })
 
 app.put('/', (req, res) => {

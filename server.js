@@ -9,27 +9,51 @@ let obj = {nome: "Teste", idade: 12}
 let obj2 = {nome: "Teste", idade: 12}
 let tabela = [obj, obj2]
 
-app.get('/', (req, res) => {
-   res.json(db.buscar("clientes"))
+// /pessoas
+// /pedidos
+// /produtos
+
+// instagram.com/jefersoncs
+// instagram.com/pearljam
+
+// facebook.com/perfil/jeferson
+// facebook.com/perfil/carlos
+
+
+// Query parametros
+    // ? Feitos para passar informações que não necessitam de segurança
+// Route parametros
+    //Páginas dinâmicas
+    
+// JSON -> Informações seguras
+
+//https://mail.google.com/mail/u/4/?ogbl#inbox
+// nome=alice&idade=18
+
+app.get("/:tabela/:id", (req, res) => {
+    const {id, tabela} = req.params
+    res.json(db.buscarItem(tabela, id))
+})
+app.get('/:tabela', (req, res) => {
+   const {tabela} = req.params
+   res.json(db.buscar(tabela))
 })
 
-app.get('/item', (req, res) => {
-    const {id} = req.body
-   res.json(db.buscarItem(id))
-})
-app.post('/', (req, res) => {
-    const resposta = db.adicionar("pessoas",req.body)
+app.post('/:tabela', (req, res) => {
+    const {tabela} = req.params
+    const resposta = db.adicionar(tabela,req.body)
     res.end(resposta)
 })
 
-app.put('/', (req, res) => {
-    const response = db.alterar(req.body)
+app.put("/:tabela/:id", (req, res) => {
+    const {id, tabela} = req.params
+    const response = db.alterar(tabela, id, req.body)
     res.end(response)
 })
 
-app.delete("/item", (req, res) => {
-    const {id} = req.body
-    const resposta = db.deletar(id)
+app.delete("/:tabela/:id", (req, res) => {
+    const {id, tabela} = req.params
+    const resposta = db.deletar(tabela, id)
     res.send(resposta)
 })
 

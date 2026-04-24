@@ -34,8 +34,7 @@ class Database {
     adicionar(tabela, item){
         const novoItem = {
             id: randomUUID(),
-            nome: item.nome,
-            idade: item.idade
+            ...item
         }
         let msg = ""
 
@@ -76,9 +75,9 @@ class Database {
         }
     }
 
-    alterar(tabela, item){
+    alterar(tabela, id ,item){
         if (Array.isArray(this.database[tabela])){
-            const {id, nome, idade} = item
+            const {nome, idade} = item
             let index = this.database[tabela].findIndex(elem => elem.id == id)
             if(index == -1){
                 return "Id não encontrado"

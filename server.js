@@ -1,13 +1,40 @@
 import express from "express"
 import Database from "./database.js"
+import db1 from "./dbconexao.js"
+import Pratos from "./models/pratos.js"
+import Pedidos from "./models/pedidos.js"
+
 const app = express()
 app.use(express.json())
+
+app.get("/pratos", async (req, res) => {
+    const pratos = await Pratos.find()
+    res.json(pratos)
+})
+
+app.get("/pedidos", async (req, res) => {
+    const pedidos = await Pedidos.find().populate({path: "pratos", select: "nome"})
+    console.log(pedidos)
+    res.json(pedidos)
+})
+
+app.post("/pedidos", async (req, res) => {
+    const novoPedido = new Pedidos(req.body)
+    await novoPedido.save()
+    res.json(novoPedido)
+})
+
+
 
 const db = new Database()
 
 let obj = {nome: "Teste", idade: 12}
 let obj2 = {nome: "Teste", idade: 12}
 let tabela = [obj, obj2]
+
+//Restaurante Reservas de Mesa
+//CRUD -> 3 Entidades
+// Mesa - Pratos - Cliente
 
 // /pessoas
 // /pedidos
@@ -29,6 +56,19 @@ let tabela = [obj, obj2]
 
 //https://mail.google.com/mail/u/4/?ogbl#inbox
 // nome=alice&idade=18
+
+
+//-> criação de login (Email e Senha)
+//-> Login
+app.post("/usuarios/criar", (req, res) => {
+    const {email, senha} = req.body
+    if(!email && !senha){
+        console.log("Dados inválido")
+    } else {
+        const dados = db.buscar("Usuários")
+    }
+    res.send("Criando usuários")
+})
 
 app.get("/:tabela/:id", (req, res) => {
     const {id, tabela} = req.params
